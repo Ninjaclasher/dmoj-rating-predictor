@@ -2,4 +2,4 @@
 
 This is the frontend Chrome extension for predicting rating changes. The extension queries the API at [evanzhang.me](https://evanzhang.me/rating/).
 
-
+![](https://i.imgur.com/fUGLzjc.png)
