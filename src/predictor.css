@@ -1,0 +1,19 @@
+.rating-delta {
+    font-weight: bold;
+}
+
+.delta-none {
+}
+
+.delta-zero {
+    color: grey;
+}
+
+.delta-positive {
+    color: green;
+}
+
+.delta-negative {
+    color: red;
+}
+.
