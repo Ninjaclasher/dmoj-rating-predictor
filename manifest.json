@@ -1,6 +1,6 @@
 {
     "name": "DMOJ Rating Predictor",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "manifest_version": 2,
     "description": "An extension which shows rating changes next to DMOJ contest rankings.",
     "homepage_url": "https://dmoj.ca",
@@ -10,7 +10,7 @@
         "128": "icons/128.png"
     },
     "permissions": [
-        "https://evanzhang.me/"
+        "https://evanzhang.ca/"
     ],
     "background": {
         "scripts": ["src/background.js"]

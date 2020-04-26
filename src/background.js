@@ -1,6 +1,6 @@
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        fetch(`https://evanzhang.me/rating/contest/${request.contest_key}/api`)
+        fetch(`https://evanzhang.ca/rating/contest/${request.contest_key}/api`)
         .then(function(response) {
             if (response.status !== 200) {
                 sendResponse({status: 'failed', err: 'response status not 200.'});
