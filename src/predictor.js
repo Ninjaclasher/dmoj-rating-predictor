@@ -5,12 +5,15 @@ const deltas = {
     '0': 'zero',
     '1': 'positive',
 };
+const ignored_statuses = ['Contest not rated', 'Contest not loaded', 'Contest not found'];
 
 let contest_key = contest_regex.exec($(location).attr('pathname'))[1];
 
 if (contest_key !== null) {
     chrome.runtime.sendMessage({contest_key: contest_key}, function(response) {
-        if (response.status !== 'failed' && 'users' in response) {
+        if (ignored_statuses.includes(response.status)) {
+            console.log('Status ignored: ' + response.status);
+        } else if (response.status !== 'failed' && 'users' in response) {
             $('#users-table > thead tr').append('<th>\u25B2</th>');
             $('#users-table > tbody > tr').each(function() {
                 let user = user_regex.exec($(this).attr('id'))[1];
