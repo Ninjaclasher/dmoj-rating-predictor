@@ -13,6 +13,14 @@ const user_table = {
     body: $('#users-table > tbody > tr')
 }
 
+function on_load_ratings() {
+    $('#queue-custom-contest').find('i').removeClass('fa-signal').addClass('fa-spinner fa-pulse');
+}
+
+function on_finish_load_ratings() {
+    $('#queue-custom-contest').find('i').removeClass('fa-spinner fa-pulse').addClass('fa-signal');
+}
+
 function render_rating_deltas(users) {
     $('.rating-delta').remove();
     user_table.head.append('<th class="rating-delta">\u25B2</th>');
@@ -25,6 +33,7 @@ function render_rating_deltas(users) {
         }
         $(this).append(`<td class="rating-delta ${delta_class}">${delta > 0 ? "+" : " "}${delta}</td>`);
     });
+    on_finish_load_ratings();
 }
 
 async function fetch_custom_contest(id) {
@@ -37,6 +46,7 @@ async function fetch_custom_contest(id) {
         render_rating_deltas(response.users);
     } else {
         console.log('Failed to fetch custom contest request: ' + response.err);
+        on_finish_load_ratings();
     }
 }
 
@@ -50,6 +60,7 @@ async function queue_custom_contest(contest_key, request_token) {
     if (response.status !== 'success' || !('id' in response)) {
         console.log('Failed to queue custom contest request:');
         console.log(response);
+        on_finish_load_ratings();
         return;
     }
     console.log('Got custom contest id: ' + response.id);
@@ -69,12 +80,16 @@ async function custom_contest(contest_key, request_token, refresh_delay, force_q
 }
 
 async function fetch_ratings(contest_key, request_token, refresh_delay, force_queue) {
+    on_load_ratings();
+
     let response = await api.fetch_contest({contest_key: contest_key});
 
     if (ignored_statuses.includes(response.status)) {
         console.log('Status ignored: ' + response.status);
         if (force_queue) {
             await custom_contest(contest_key, request_token, refresh_delay, false);
+        } else {
+            on_finish_load_ratings();
         }
     } else if (response.status !== 'failed' && 'users' in response) {
         console.log('Successfully requested rating predictions.');
@@ -86,6 +101,7 @@ async function fetch_ratings(contest_key, request_token, refresh_delay, force_qu
         }
     } else {
         console.log('Failed to get rating delta: ' + response.err);
+        on_finish_load_ratings();
     }
 }
 
@@ -97,13 +113,14 @@ async function fetch_ratings(contest_key, request_token, refresh_delay, force_qu
         let request_token = result.token;
         let refresh_delay = result.refresh_delay || config.default_refresh_delay;
 
-        await fetch_ratings(contest_key, request_token, refresh_delay, false);
         if (request_token !== undefined) {
-            $('.users').find('div').first().prepend($('</span><a id="queue-custom-contest" href="#" title="Refresh rating predictions" style="color: gray"><i class="fa fa-lg fa-signal"></i></a>'));
+            $('.users').find('div').first().prepend($('</span><a id="queue-custom-contest" href="#" title="Refresh rating predictions" style="color: gray"><i class="fa fa-lg fa-spinner fa-pulse"></i></a>'));
             $('#queue-custom-contest').click(async function() {
                 await fetch_ratings(contest_key, request_token, refresh_delay, true);
             });
         }
+
+        await fetch_ratings(contest_key, request_token, refresh_delay, false);
     }
 })();
 

@@ -1,5 +1,5 @@
 .form-wrapper {
-    width: 700px;
+    width: 650px;
 }
 
 .form-row {
@@ -13,7 +13,7 @@
 }
 
 .form-row > input {
-    flex: 5;
+    flex: 4;
 }
 
 .form-row .button {
