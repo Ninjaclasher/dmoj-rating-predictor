@@ -10,16 +10,22 @@
         "128": "icons/128.png"
     },
     "permissions": [
-        "https://evanzhang.ca/"
+        "https://evanzhang.ca/",
+        "storage"
     ],
+    "incognito": "split",
+    "browser_action": {
+        "default_title": "DMOJ Rating Predictor",
+        "default_popup": "src/main.html"
+    },
     "background": {
-        "scripts": ["src/background.js"]
+        "scripts": ["src/js/background.js"]
     },
     "content_scripts": [
         {
             "matches": ["https://dmoj.ca/contest/*/ranking/"],
-            "css": ["src/predictor.css"],
-            "js": ["src/jquery-3.4.1.min.js", "src/predictor.js"]
+            "css": ["src/css/predictor.css"],
+            "js": ["src/vendor/jquery-3.4.1.min.js", "src/js/common.js", "src/js/predictor.js"]
         }
     ]
 }
