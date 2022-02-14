@@ -25,7 +25,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://dmoj.ca/contest/*/ranking/"],
+            "matches": ["https://dmoj.ca/contest/*/ranking/", "https://dmoj.ca/users/"],
             "css": ["src/css/predictor.css"],
             "js": ["src/vendor/jquery-3.4.1.min.js", "src/js/common.js", "src/js/predictor.js"]
         }

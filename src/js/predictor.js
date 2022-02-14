@@ -106,8 +106,14 @@ async function fetch_ratings(contest_key, request_token, refresh_delay, force_qu
 }
 
 (async function main() {
-    let contest_key = contest_regex.exec($(location).attr('pathname'))[1];
-    if (contest_key !== null) {
+    let contest_key = contest_regex.exec($(location).attr('pathname'));
+    if (contest_key === null) {
+        contest_key = contest_regex.exec($('.tab.active').find('a').attr('href'));
+    }
+
+    if (contest_key) {
+        contest_key = contest_key[1];
+
         let result = await api.get_storage(['token', 'refresh_delay']);
 
         let request_token = result.token;
