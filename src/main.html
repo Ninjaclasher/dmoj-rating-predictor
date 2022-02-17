@@ -3,27 +3,46 @@
     <head>
         <title>DMOJ Rating Predictor</title>
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="vendor/bootstrap.min.css">
     </head>
     <body>
-        <div class="form-wrapper">
-            <form id="token-form" class="form-row">
+        <div class="form-wrapper p-2">
+            <form id="token-form" class="mb-2">
+                <label for="token" class="fw-bold text-nowrap align-self-center pe-1">
+                    <span class="text-black">
+                        Request Token
+                        <small class="ps-2 fw-normal">
+                            <a href="https://evanzhang.ca/rating/help/chrome/#usage" target="_blank" rel="noopener">How do I get a request token?</a>
+                        </small>
+                    </span>
+                </label>
                 <div class="form-row">
-                    <label for="token" style="white-space: nowrap; padding-right: 5px; align-self: center">Request token:</label>
-                    <input style="padding: 5px; margin: 2px;" type="text" name="token" id="token">
-                    <input class="button" style="padding: 5px; margin: 2px;" type="submit" value="Set">
+                    <input class="form-control" type="text" name="token" id="token">
+                    <span class="ps-1"><button class="btn btn-orange" type="submit">Set</button></span>
                 </div>
             </form>
             <form id="refresh-delay-form">
-                <div class="form-row">
-                    <label for="refresh-delay" style="white-space: nowrap; padding-right: 5px; align-self: center">Refresh delay (sec):</label>
-                    <input style="padding: 5px; margin: 2px;" type="number" name="refresh-delay" id="refresh-delay">
-                    <input class="button" style="padding: 5px; margin: 2px;" type="submit" value="Set">
+                <label for="refresh-delay" class="fw-bold text-nowrap align-self-center pe-1">
+                    <span class="text-black">
+                        Refresh Delay (seconds)
+                    </span>
+                </label>
+                <div class="form-row form-group">
+                    <input class="form-control" type="number" name="refresh-delay" id="refresh-delay">
+                    <span class="ps-1"><button class="btn btn-orange" type="submit">Set</button></span>
                 </div>
             </form>
         </div>
+        <div class="text-center text-secondary">
+            <small>
+                <a href="https://evanzhang.ca/rating/help/chrome/" class="text-secondary" target="_blank" rel="noopener">Help</a> |
+                <a href="https://evanzhang.ca/rating/" class="text-secondary" target="_blank" rel="noopener">API</a> |
+                <a href="https://github.com/Ninjaclasher/dmoj-rating-predictor" class="text-secondary" target="_blank" rel="noopener">Source code</a>
+            </small>
+        </div>
+        <script src="vendor/jquery-3.4.1.min.js"></script>
+        <script src="vendor/bootstrap.min.js"></script>
+        <script src="js/common.js"></script>
+        <script src="js/main.js"></script>
     </body>
-
-    <script src="vendor/jquery-3.4.1.min.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/main.js"></script>
 </html>

@@ -8,14 +8,33 @@
     width: 100%;
 }
 
-.form-row > label {
-    flex: 1;
+.form-control:focus {
+    border-color: #ff712b !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 7px rgba(255, 113, 43, 0.6) !important;
 }
 
-.form-row > input {
-    flex: 4;
+.btn-orange {
+    background-color: #333 !important;
+    color: white !important;
+}
+.btn-orange:hover {
+    background-color: #ff712b !important;
+}
+.btn-orange:focus,
+.btn-orange:active {
+    background-color: #ff442b !important;
+    outline: 0px !important;
+    box-shadow: none !important;
 }
 
-.form-row .button {
-    flex: 0 0 auto;
+.text-black {
+  color: #343a40 !important;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+a:hover {
+    text-decoration: underline !important;
 }

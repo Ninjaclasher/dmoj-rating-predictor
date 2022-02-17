@@ -16,6 +16,7 @@
         "https://evanzhang.ca/"
     ],
     "incognito": "split",
+    "options_page": "src/main.html",
     "action": {
         "default_title": "DMOJ Rating Predictor",
         "default_popup": "src/main.html"
