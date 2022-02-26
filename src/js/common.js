@@ -11,7 +11,7 @@ function local_storage_promise(action) {
             if (args !== undefined) {
                 chrome.storage.local[action](args, callback);
             } else {
-                chrome.stroage.local[action](callback);
+                chrome.storage.local[action](callback);
             }
         });
     }
