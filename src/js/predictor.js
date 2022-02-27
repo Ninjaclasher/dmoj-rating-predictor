@@ -43,9 +43,8 @@ function render_rating_deltas(users) {
             delta = userObject.rating_change;
             delta_class = 'delta-' + deltas[Math.sign(delta)];
         
-            if (userObject.old_rating === null || get_rating_group(userObject.old_rating) !== get_rating_group(userObject.new_rating)) {
-                $(`#user-${user} .user-name`).empty().append(`<span class='rating rate-${get_rating_group(userObject.old_rating)} user'><a href='/users/${user}'>${user}</a></span><span> → </span><span class='rating rate-${get_rating_group(userObject.new_rating)} user'><a href='/users/${user}'>${user}</a></span>`);
-            }
+            if (userObject.old_rating === null || get_rating_group(userObject.old_rating) !== get_rating_group(userObject.new_rating))
+                $(`#user-${user} .user-name`).append(`<span> → </span><span class='rating rate-${get_rating_group(userObject.new_rating)} user'><a href='/users/${user}'>${user}</a></span>`);
             
         }
         $(this).append(`<td class="rating-delta ${delta_class}">${delta > 0 ? "+" : " "}${delta}</td>`);
