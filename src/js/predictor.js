@@ -21,15 +21,45 @@ function on_finish_load_ratings() {
     $('#queue-custom-contest').find('i').removeClass('fa-spinner fa-pulse').addClass('fa-signal');
 }
 
+function get_rating_group(rating) {
+    if (rating === null) return 'none';
+    if (rating < 1000) return 'newbie';
+    if (rating < 1300) return 'amateur';
+    if (rating < 1600) return 'expert';
+    if (rating < 1900) return 'candidate-master';
+    if (rating < 2400) return 'master';
+    if (rating < 3000) return 'grandmaster';
+
+    return 'target';
+}
+
 function render_rating_deltas(users) {
     $('.rating-delta').remove();
     user_table.head.append('<th class="rating-delta">\u25B2</th>');
     user_table.body.each(function() {
         let user = user_regex.exec($(this).attr('id'))[1];
         let [delta, delta_class] = ['', 'delta-none'];
-        if (user in users && users[user].rating_change !== null) {
-            delta = users[user].rating_change;
-            delta_class = 'delta-' + deltas[Math.sign(delta)];
+        let user_object = users[user];
+
+
+        if (user in users && user_object.rating_change !== null) {
+            delta = user_object.rating_change;
+            delta_class = 'delta-' + deltas[Math.sign(delta)]; 
+
+            $(`#user-${user} .user-name span[class^="rating rate"]`).remove();
+
+            $(`#user-${user} .user-name`).append(
+                `<span class="rating rate-${get_rating_group(user_object.old_rating)} user">`+
+                `<a href="/user/${user}">${user}</a></span>`
+            );
+
+            if (user_object.old_rating === null || get_rating_group(user_object.old_rating) !== get_rating_group(user_object.new_rating)) {
+                $(`#user-${user} .user-name`)
+                    .append(
+                        `<span class="rating rate-seperator"> \u2192 </span><span class="rating rate-${get_rating_group(user_object.new_rating)} user">`+
+                        `<a href="/user/${user}">${user}</a></span>`
+                    );
+            }
         }
         $(this).append(`<td class="rating-delta ${delta_class}">${delta > 0 ? "+" : " "}${delta}</td>`);
     });
