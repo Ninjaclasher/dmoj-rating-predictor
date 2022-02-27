@@ -22,6 +22,7 @@ function on_finish_load_ratings() {
 }
 
 function get_rating_group(rating) {
+    if (rating === null) return 'none';
     if (rating < 1000) return 'newbie';
     if (rating < 1300) return 'amateur';
     if (rating < 1600) return 'expert';
@@ -39,17 +40,23 @@ function render_rating_deltas(users) {
         let user = user_regex.exec($(this).attr('id'))[1];
         let [delta, delta_class] = ['', 'delta-none'];
         let user_object = users[user];
+
+
         if (user in users && user_object.rating_change !== null) {
             delta = user_object.rating_change;
-            delta_class = 'delta-' + deltas[Math.sign(delta)];
-        
+            delta_class = 'delta-' + deltas[Math.sign(delta)]; 
+
+            $(`#user-${user} .user-name span[class^="rating rate"]`).remove();
+
+            $(`#user-${user} .user-name`).append(
+                `<span class="rating rate-${get_rating_group(user_object.old_rating)} user">`+
+                `<a href="/user/${user}">${user}</a></span>`
+            );
+
             if (user_object.old_rating === null || get_rating_group(user_object.old_rating) !== get_rating_group(user_object.new_rating)) {
                 $(`#user-${user} .user-name`)
-                    .empty()
                     .append(
-                        `<span class="rating rate-${get_rating_group(user_object.old_rating)} user">`+
-                        `<a href="/user/${user}">${user}</a></span>`+
-                        `<span> \u2192 </span><span class="rating rate-${get_rating_group(user_object.new_rating)} user">`+
+                        `<span class="rating rate-seperator"> \u2192 </span><span class="rating rate-${get_rating_group(user_object.new_rating)} user">`+
                         `<a href="/user/${user}">${user}</a></span>`
                     );
             }
