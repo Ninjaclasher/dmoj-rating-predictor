@@ -47,9 +47,9 @@ function render_rating_deltas(users) {
                 $(`#user-${user} .user-name`).empty()
                     .append(
                         `<span class='rating rate-${get_rating_group(user_object.old_rating)} user'>`+
-                        `<a href='/users/${user}'>${user}</a></span>`+
+                        `<a href='/user/${user}'>${user}</a></span>`+
                         `<span> \u2192 </span><span class='rating rate-${get_rating_group(user_object.new_rating)} user'>`+
-                        `<a href='/users/${user}'>${user}</a></span>`
+                        `<a href='/user/${user}'>${user}</a></span>`
                     );
             
         }
