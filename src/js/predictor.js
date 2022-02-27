@@ -38,14 +38,20 @@ function render_rating_deltas(users) {
     user_table.body.each(function() {
         let user = user_regex.exec($(this).attr('id'))[1];
         let [delta, delta_class] = ['', 'delta-none'];
-        let userObject = users[user];
-        if (user in users && userObject.rating_change !== null) {
-            delta = userObject.rating_change;
+        let user_object = users[user];
+        if (user in users && user_object.rating_change !== null) {
+            delta = user_object.rating_change;
             delta_class = 'delta-' + deltas[Math.sign(delta)];
         
-            if (userObject.old_rating === null || get_rating_group(userObject.old_rating) !== get_rating_group(userObject.new_rating)) {
-                $(`#user-${user} .user-name`).empty().append(`<span class='rating rate-${get_rating_group(userObject.old_rating)} user'><a href='/users/${user}'>${user}</a></span><span> → </span><span class='rating rate-${get_rating_group(userObject.new_rating)} user'><a href='/users/${user}'>${user}</a></span>`);
-            }
+            if (user_object.old_rating === null || get_rating_group(user_object.old_rating) !== get_rating_group(user_object.new_rating))
+                $(`#user-${user} .user-name`).empty()
+                    .append(
+                        `<span class='rating rate-${get_rating_group(user_object.old_rating)} user'>`+
+                        `<a href='/users/${user}'>${user}</a></span>`+
+                        `<span> \u2192 </span><span class='rating rate-${get_rating_group(user_object.new_rating)} user'>`+
+                        `<a href='/users/${user}'>${user}</a></span>`
+                    );
+            
         }
         $(this).append(`<td class="rating-delta ${delta_class}">${delta > 0 ? "+" : " "}${delta}</td>`);
     });
