@@ -21,15 +21,31 @@ function on_finish_load_ratings() {
     $('#queue-custom-contest').find('i').removeClass('fa-spinner fa-pulse').addClass('fa-signal');
 }
 
+function get_rating_group(rating) {
+    if (rating < 1000) return 'newbie';
+    if (rating < 1300) return 'amateur';
+    if (rating < 1600) return 'expert';
+    if (rating < 1900) return 'candidate-master';
+    if (rating < 2400) return 'master';
+    if (rating < 3000) return 'grandmaster';
+
+    return 'target';
+}
+
 function render_rating_deltas(users) {
     $('.rating-delta').remove();
     user_table.head.append('<th class="rating-delta">\u25B2</th>');
     user_table.body.each(function() {
         let user = user_regex.exec($(this).attr('id'))[1];
         let [delta, delta_class] = ['', 'delta-none'];
-        if (user in users && users[user].rating_change !== null) {
-            delta = users[user].rating_change;
+        let userObject = users[user];
+        if (user in users && userObject.rating_change !== null) {
+            delta = userObject.rating_change;
             delta_class = 'delta-' + deltas[Math.sign(delta)];
+        
+            if (userObject.old_rating === null || get_rating_group(userObject.old_rating) !== get_rating_group(userObject.new_rating))
+                $(`#user-${user} .user-name`).append(`<span> → </span><span class='rating rate-${get_rating_group(userObject.new_rating)} user'><a href='/users/${user}'>${user}</a></span>`);
+            
         }
         $(this).append(`<td class="rating-delta ${delta_class}">${delta > 0 ? "+" : " "}${delta}</td>`);
     });
