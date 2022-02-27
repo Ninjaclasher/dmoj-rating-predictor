@@ -15,7 +15,7 @@
     "host_permissions": [
         "https://evanzhang.ca/"
     ],
-    "incognito": "spanning",
+    "incognito": "split",
     "options_page": "src/main.html",
     "action": {
         "default_title": "DMOJ Rating Predictor",

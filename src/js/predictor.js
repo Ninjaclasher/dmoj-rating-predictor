@@ -41,10 +41,9 @@ function render_rating_deltas(users) {
         let [delta, delta_class] = ['', 'delta-none'];
         let user_object = users[user];
 
-
         if (user in users && user_object.rating_change !== null) {
             delta = user_object.rating_change;
-            delta_class = 'delta-' + deltas[Math.sign(delta)]; 
+            delta_class = 'delta-' + deltas[Math.sign(delta)];
 
             $(`#user-${user} .user-name span[class^="rating rate"]`).remove();
 
