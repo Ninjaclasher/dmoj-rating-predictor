@@ -1,6 +1,7 @@
 const sleep_time = 500;
 const contest_regex = /contest\/(.+)\/ranking/;
 const user_regex = /user-(.+)/;
+const username_class_regex = /rating rate-(.+) (.+)/;
 const deltas = {
     '-1': 'negative',
     '0': 'zero',
@@ -21,7 +22,7 @@ function on_finish_load_ratings() {
     $('#queue-custom-contest').find('i').removeClass('fa-spinner fa-pulse').addClass('fa-signal');
 }
 
-function get_rating_group(rating) {
+function get_rating_rank(rating) {
     if (rating === null) return 'none';
     if (rating < 1000) return 'newbie';
     if (rating < 1300) return 'amateur';
@@ -45,19 +46,21 @@ function render_rating_deltas(users) {
             delta = user_object.rating_change;
             delta_class = 'delta-' + deltas[Math.sign(delta)];
 
-            $(`#user-${user} .user-name span[class^="rating rate"]`).remove();
+            let rating_span = $(this).find('.user-name span.rating');
 
-            $(`#user-${user} .user-name`).append(
-                `<span class="rating rate-${get_rating_group(user_object.old_rating)} user">`+
-                `<a href="/user/${user}">${user}</a></span>`
-            );
+            let username_match = username_class_regex.exec(rating_span.attr('class'));
+            let current_rating_rank = username_match[1];
+            let display_rank = username_match[2];
 
-            if (user_object.old_rating === null || get_rating_group(user_object.old_rating) !== get_rating_group(user_object.new_rating)) {
-                $(`#user-${user} .user-name`)
-                    .append(
-                        `<span class="rating rate-seperator"> \u2192 </span><span class="rating rate-${get_rating_group(user_object.new_rating)} user">`+
-                        `<a href="/user/${user}">${user}</a></span>`
-                    );
+            let old_rating_rank = get_rating_rank(user_object.old_rating);
+            let new_rating_rank = get_rating_rank(user_object.new_rating);
+
+            rating_span.removeClass(`rate-${current_rating_rank}`).addClass(`rate-${old_rating_rank}`);
+
+            if (user_object.old_rating === null || old_rating_rank !== new_rating_rank) {
+                rating_span
+                    .after(rating_span.clone().removeClass(`rate-${old_rating_rank}`).addClass(`rate-${new_rating_rank}`))
+                    .after($(`<span class="rate-separator"> \u2192 </span>`));
             }
         }
         $(this).append(`<td class="rating-delta ${delta_class}">${delta > 0 ? "+" : " "}${delta}</td>`);
