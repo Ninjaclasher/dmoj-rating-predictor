@@ -1,7 +1,7 @@
 const sleep_time = 500;
 const contest_regex = /contest\/(.+)\/ranking/;
 const user_regex = /user-(.+)/;
-const username_class_regex = /rating rate-(.+) (.+)/;
+const username_class_regex = /rating.*rate-([^ ]+).*/;
 const deltas = {
     '-1': 'negative',
     '0': 'zero',
@@ -35,8 +35,8 @@ function get_rating_rank(rating) {
 }
 
 function render_rating_deltas(users) {
-    $('.rating-delta').remove();
-    user_table.head.append('<th class="rating-delta">\u25B2</th>');
+    $('.rating-predictor').remove();
+    user_table.head.append('<th class="rating-predictor rating-delta">\u25B2</th>');
     user_table.body.each(function() {
         let user = user_regex.exec($(this).attr('id'))[1];
         let [delta, delta_class] = ['', 'delta-none'];
@@ -50,7 +50,6 @@ function render_rating_deltas(users) {
 
             let username_match = username_class_regex.exec(rating_span.attr('class'));
             let current_rating_rank = username_match[1];
-            let display_rank = username_match[2];
 
             let old_rating_rank = get_rating_rank(user_object.old_rating);
             let new_rating_rank = get_rating_rank(user_object.new_rating);
@@ -59,11 +58,11 @@ function render_rating_deltas(users) {
 
             if (user_object.old_rating === null || old_rating_rank !== new_rating_rank) {
                 rating_span
-                    .after(rating_span.clone().removeClass(`rate-${old_rating_rank}`).addClass(`rate-${new_rating_rank}`))
-                    .after($(`<span class="rate-separator"> \u2192 </span>`));
+                    .after(rating_span.clone().removeClass(`rate-${old_rating_rank}`).addClass(`rating-predictor rate-${new_rating_rank}`))
+                    .after($(`<span class="rating-predictor rate-separator"> \u2192 </span>`));
             }
         }
-        $(this).append(`<td class="rating-delta ${delta_class}">${delta > 0 ? "+" : " "}${delta}</td>`);
+        $(this).append(`<td class="rating-predictor rating-delta ${delta_class}">${delta > 0 ? "+" : " "}${delta}</td>`);
     });
     on_finish_load_ratings();
 }
