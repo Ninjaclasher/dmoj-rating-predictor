@@ -4,6 +4,6 @@ This is the frontend Chrome extension for predicting rating changes. The extensi
 
 ## Usage
 
-The extension is available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/dmoj-rating-predictor/nkhbchlmfhjpjgocbaakkmgejjhnnkoa). For usage instructions, check out the [help page](https://evanzhang.ca/rating/help/chrome/).
+The extension is available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/dmoj-rating-predictor/nkhbchlmfhjpjgocbaakkmgejjhnnkoa) and the [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/dmoj-rating-predictor). For usage instructions, check out the [help page](https://evanzhang.ca/rating/help/extension/).
 
-![](https://evanzhang.ca/assets/predictor/chrome-extension.png)
+![](https://evanzhang.ca/assets/predictor/extension.png)
