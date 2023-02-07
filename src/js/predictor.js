@@ -10,8 +10,8 @@ const deltas = {
 const ignored_statuses = ['Contest not rated', 'Contest not loaded', 'Contest not found', 'not found'];
 
 const user_table = {
-    head: $('#users-table > thead > tr'),
-    body: $('#users-table > tbody > tr')
+    head: $('.users-table > thead > tr'),
+    body: $('.users-table > tbody > tr')
 }
 
 function on_load_ratings() {
